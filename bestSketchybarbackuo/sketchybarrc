@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors 
+source "$HOME/.config/sketchybar/icons.sh" # Loads all defined icons
+
+ITEM_DIR="$HOME/.config/sketchybar/items" # Directory where the items are configured
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+DYNAMIC_ISLAND_DIR="$HOME/.config/dynamic-island-sketchybar"
+
+
+source "$DYNAMIC_ISLAND_DIR/item.sh" # Loads Dynamic-Island item
+
+# helper process
+HELPER=git.felix.helper
+killall helper
+cd $HOME/.config/sketchybar/helper && make
+$HOME/.config/sketchybar/helper/helper $HELPER > /dev/null 2>&1 &
+
+FONT="SF Pro"
+
+# Set up your own custom sketchybar config here
+sketchybar --bar \
+    height=32 \
+    color=0x00000000 \
+    margin=0 \
+    sticky=on \
+    padding_left=23 \
+    padding_right=23 \
+    notch_width=188 \
+    display=all
+
+# Alternatiive background colors
+# label.color=0xffffffff
+# background.color=0x9924273a
+sketchybar --default \
+    background.color=0x66494d64 \
+    background.corner_radius=5 \
+    background.padding_right=5 \
+    background.height=26 \
+    icon.font="$FONT_FACE:Medium:15.0" \
+    icon.padding_left=5 \
+    icon.padding_right=5 \
+    label.font="$FONT_FACE:Medium:12.0" \
+    label.color=0xffcad3f5 \
+    label.y_offset=0 \
+    label.padding_left=0 \
+    label.padding_right=5
+ITEM_CORNER_RADIUS=3
+ITEM_BACKGROUND_HEIGHT=26
+ITEM_PADDING=14
+
+source "$ITEM_DIR/spaces.sh"
+source "$ITEM_DIR/front_app.sh"
+source "$ITEM_DIR/mail.sh"
+source "$ITEM_DIR/power.sh"
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/cpu.sh"
+source "$ITEM_DIR/network.sh"
+
+source "$ITEM_DIR/bracket_r.sh"
+source "$ITEM_DIR/bracket_l.sh"
+
+sketchybar --update
